@@ -1,0 +1,11 @@
+FROM ubuntu
+
+RUN apt-get -y update && apt-get -y install nginx
+
+COPY /res/default /etc/nginx/sites-available/default
+
+COPY /res/index.html /usr/share/nginx/html
+
+EXPOSE 80/tcp
+
+CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
