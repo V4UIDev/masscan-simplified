@@ -10,7 +10,6 @@ while read -r p ; do sudo apt-get install -y $p ; done < <(cat << "EOF"
     git
     make
     gcc
-    
 EOF
 )
 
@@ -20,8 +19,20 @@ cd masscan
 make install
 cd ..
 
-echo creating NGINX docker container...
+echo creating flask docker container...
 
-docker build -t nginx/nginx -f ./dockerbuild/Dockerfile.nginx .
+# docker build -t nginx/nginx -f ./dockerbuild/Dockerfile.nginx .
 
-docker run -d --network="host" --name nginx nginx/nginx
+docker build -t flask -f ./dockerbuild/Dockerfile.flask .
+
+docker run -d --network="host" --name flask flask
+
+echo creating MongoDB docker container...
+
+docker build -t mongodb/mongodb -f ./dockerbuild/Dockerfile.mongodb .
+
+docker run -d --name mongodatabase mongodb/mongodb
+
+sleep 3s
+
+docker run --link mongodatabase:mongo -p 8081:8081 --name mongo-express -e ME_CONFIG_MONGODB_URL="mongodb://admin:password@mongodatabase:27017/masscanresults" -e ME_CONFIG_MONGODB_ENABLE_ADMIN=false -d mongo-express
