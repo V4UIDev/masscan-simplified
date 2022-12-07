@@ -1,0 +1,6 @@
+FROM mongo:4.4.18-rc0-focal
+ENV MONGO_INITDB_ROOT_USERNAME admin
+ENV MONGO_INITDB_ROOT_PASSWORD password
+ENV MONGO_INITDB_DATABASE masscanresults
+
+ADD /res/mongo-init.js /docker-entrypoint-initdb.d/
