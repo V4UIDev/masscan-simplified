@@ -10,8 +10,18 @@ while read -r p ; do sudo apt-get install -y $p ; done < <(cat << "EOF"
     git
     make
     gcc
+    python3
+    python3-pip
 EOF
 )
+
+echo Update to use correct python...
+
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1
+
+echo Install Django...
+
+sudo pip install Django
 
 echo Installing masscan 
 git clone https://github.com/robertdavidgraham/masscan
