@@ -12,6 +12,7 @@ while read -r p ; do sudo apt-get install -y $p ; done < <(cat << "EOF"
     gcc
     python3
     python3-pip
+    mongo-tools
 EOF
 )
 
@@ -31,17 +32,19 @@ cd ..
 
 echo creating flask docker container...
 
-# docker build -t nginx/nginx -f ./dockerbuild/Dockerfile.nginx .
+docker build -t nginx/nginx -f ./dockerbuild/Dockerfile.nginx .
 
-docker build -t flask -f ./dockerbuild/Dockerfile.flask .
+# docker build -t flask -f ./dockerbuild/Dockerfile.flask .
 
-docker run -d --network="host" --name flask flask
+# docker run -d --network="host" --name flask flask
+
+docker run -d --network="host" --name nginx nginx/nginx
 
 echo creating MongoDB docker container...
 
 docker build -t mongodb/mongodb -f ./dockerbuild/Dockerfile.mongodb .
 
-docker run -d --name mongodatabase mongodb/mongodb
+docker run -d -p 27017:27017 --name mongodatabase mongodb/mongodb
 
 sleep 3s
 

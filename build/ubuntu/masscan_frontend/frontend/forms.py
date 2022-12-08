@@ -42,3 +42,5 @@ class RequestForm(forms.Form):
     ipaddr = forms.CharField()
     subnet = forms.ChoiceField(choices=CHOICES)
     rate = forms.CharField()
+    lowerboundport = forms.CharField()
+    upperboundport = forms.CharField()
