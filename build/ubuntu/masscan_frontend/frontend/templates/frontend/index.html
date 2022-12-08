@@ -1,6 +1,40 @@
 <!DOCTYPE html>
 <html>
-    <body>
-        <p>This is the frontend.</p>
+    <head>
+        <script>
+        function createSubnets() {
+            var subnetNumber = 0
+            var subnetOption = "<option value='0'>select</option>";
+
+            for (var i = subnetNumber; i < 33; i++) {
+                subnetOption += "<option value='" + i + "''>" + i + "</option>"
+            }
+
+            document.getElementById("subnet").innerHTML = subnetOption;
+
+        }
+        </script>
+    </head>
+    <body onload="createSubnets()">
+    <ul>
+        <li><a href="about.html">About Masscan</a></li>
+        <li><a href="/" onclick="javascript:event.target.port=8081">Mongo Express</a></li>
+    </ul>
+    <form method="post">
+        <legend>Masscan Settings</legend>
+        <fieldset>
+        <label for="subnet">Subnet</label>
+        <select type="text" id="subnet" name="subnet">
+            
+        </select>
+        <br><br>
+        <label for="ipaddr">IPv4 Address</label>
+        <input type="text" id="ipaddr" name="ipaddr">
+        <br><br>
+        <label for="rate">Rate</label>
+        <input type="text" id="rate" name="rate">
+        </fieldset>
+        <input type="submit" value="Submit" />
+    </form>
     </body>
 </html>
