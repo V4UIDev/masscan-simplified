@@ -1,8 +1,14 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.template import loader
+
+from .forms import RequestForm
 
 # Create your views here.
 def index(request):
+
     template = loader.get_template('frontend/index.html')
-    return HttpResponse(template.render())
+    if request.method == "POST":
+        form = RequestForm(request.POST)
+        print(form.data)
+    form = RequestForm()
+    return render(request, "frontend/index.html", {"form": form})
