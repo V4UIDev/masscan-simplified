@@ -4,5 +4,5 @@ from django.template import loader
 
 # Create your views here.
 def index(request):
-    template = loader.get_template('frontend/templates/frontend/index.html')
+    template = loader.get_template('frontend/index.html')
     return HttpResponse(template.render())
