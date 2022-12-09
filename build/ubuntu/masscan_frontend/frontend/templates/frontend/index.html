@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+        {% load static %}
+
+        <link rel="stylesheet" href="{% static 'frontend/style.css' %}">
         <script>
         function createSubnets() {
             var subnetNumber = 0
@@ -16,31 +19,37 @@
         </script>
     </head>
     <body onload="createSubnets()">
+    <div class="title">
     <ul>
-        <li><a href="about.html">About Masscan</a></li>
-        <li><a href="/" onclick="javascript:event.target.port=8081">Mongo Express</a></li>
+        <li><a class="title" href="about/">About Masscan</a></li>
+        <li><a class="title" href="/" onclick="javascript:event.target.port=8081">Mongo Express</a></li>
     </ul>
-    <form method="post">
-        <legend>Masscan Settings</legend>
-        <fieldset>
-        <label for="subnet">Subnet</label>
-        <select type="text" id="subnet" name="subnet">
-            
-        </select>
-        <br><br>
-        <label for="ipaddr">IPv4 Address</label>
-        <input type="text" id="ipaddr" name="ipaddr">
-        <br><br>
-        <label for="rate">Rate</label>
-        <input type="text" id="rate" name="rate">
-        <br><br>
-        <label for="lowerboundport">Port (Lower bound)</label>
-        <input type="text" id="lowerboundport" name="lowerboundport">
-        <label for="upperboundport">Port (Upper bound)</label>
-        <input type="text" id="upperboundport" name="upperboundport">
+    </div>
+    <div class="form">
+        <form method="post">
+            <legend>Masscan Settings</legend>
+            <fieldset>
+            <label for="ipaddr">IPv4 Address</label>
+            <input type="text" id="ipaddr" name="ipaddr">
+            <br><br>
+            <label for="subnet">Subnet</label>
+            <select type="text" id="subnet" name="subnet">
+                
+            </select>
+            <br><br>
+            <label for="rate">Rate</label>
+            <input type="text" id="rate" name="rate">
+            <br><br>
+            <label for="lowerboundport">Port Range</label>
+            <input type="text" id="lowerboundport" name="lowerboundport">
+            <label for="upperboundport">-</label>
+            <input type="text" id="upperboundport" name="upperboundport">
 
-        </fieldset>
-        <input type="submit" value="Submit" />
-    </form>
+            </fieldset>
+            <input type="submit" value="Submit" />
+        </form>
+        <br><br>
+        <p>If you want to specify a single port, you need to input it into the lower bound port input.</p>
+    </div>
     </body>
 </html>
