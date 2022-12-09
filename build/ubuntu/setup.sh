@@ -30,22 +30,22 @@ cd masscan
 make install
 cd ..
 
-echo creating flask docker container...
+echo "Please enter a username that will be used as the MongoDB username:"
+read input
+export MS_MONGODB_USERNAME=$input
 
-docker build -t nginx/nginx -f ./dockerbuild/Dockerfile.nginx .
-
-# docker build -t flask -f ./dockerbuild/Dockerfile.flask .
-
-# docker run -d --network="host" --name flask flask
+echo "Please enter a password that will be used as the MongoDB password:"
+read input
+export MS_MONGODB_PASSWORD=$input
 
 docker run -d --network="host" --name nginx nginx/nginx
 
 echo creating MongoDB docker container...
 
-docker build -t mongodb/mongodb -f ./dockerbuild/Dockerfile.mongodb .
+docker build -t mongodb/mongodb -f ./dockerbuild/Dockerfile.mongodb --build-arg USERNAME=$MS_MONGODB_USERNAME --build-arg PASSWORD=$MS_MONGODB_PASSWORD . 
 
 docker run -d -p 27017:27017 --name mongodatabase mongodb/mongodb
 
 sleep 3s
 
-docker run --link mongodatabase:mongo -p 8081:8081 --name mongo-express -e ME_CONFIG_MONGODB_URL="mongodb://admin:password@mongodatabase:27017/masscanresults" -e ME_CONFIG_MONGODB_ENABLE_ADMIN=false -d mongo-express
+docker run --link mongodatabase:mongo -p 8081:8081 --name mongo-express -e ME_CONFIG_MONGODB_URL="mongodb://$MS_MONGODB_USERNAME:$MS_MONGODB_PASSWORD@mongodatabase:27017/masscanresults" -e ME_CONFIG_MONGODB_ENABLE_ADMIN=false -d mongo-express
