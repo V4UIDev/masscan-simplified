@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.template import loader
 from django.core.validators import validate_ipv4_address
 from django.core.exceptions import ValidationError
+from django.http import HttpResponseRedirect
 import subprocess
 import os
 
@@ -17,13 +18,13 @@ def index(request):
 
         subnet = form.data["subnet"]
         if subnet == "-1":
-            return render(request, "frontend/help/help.html")
+            return HttpResponseRedirect('/frontend/help/')
        
         ipaddr = form.data["ipaddr"]
         try:
             validate_ipv4_address(ipaddr)
         except ValidationError:
-            return render(request, "frontend/help/help.html")
+            return HttpResponseRedirect('/frontend/help/')
 
         ipv4 = f"{ipaddr}/{subnet}"
 
@@ -34,14 +35,14 @@ def index(request):
             int(rate)
             int(portrange)
         except ValueError:
-            return render(request, "frontend/help/help.html")
+            return HttpResponseRedirect('/frontend/help/')
 
         upperboundport = form.data.get("upperboundport")
         if upperboundport:
             try:
                 int(upperboundport)
             except ValueError:
-                return render(request, "frontend/help/help.html")
+                return HttpResponseRedirect('/frontend/help/')
             portrange = f"{portrange}-{upperboundport}"
         
         mongodbusername = os.environ.get('MS_MONGODB_USERNAME')
@@ -60,3 +61,6 @@ def about(request):
     template = loader.get_template('frontend/about/about.html')
 
     return render(request, "frontend/about/about.html")
+
+def help(request):
+    return render(request, "frontend/help/help.html")

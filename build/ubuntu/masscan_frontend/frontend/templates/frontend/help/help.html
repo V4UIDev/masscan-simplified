@@ -2,6 +2,7 @@
     <head>
         {% load static %}
         <link rel="stylesheet" href="{% static 'frontend/style.css' %}">
+    </head>
     <body>
     <div class="title">
     <ul>
@@ -9,9 +10,15 @@
         <li><a href="/" onclick="javascript:event.target.port=8081">Mongo Express</a></li>
     </ul>
     </div>
+    <br><br>
     <div class="error" style="font-size:32px">
-        <p>Invalid Ip Address</p>
+        <p class="help"> Help Page</p>
     </div>
     <div class="example" style="font-size:28px">
-        <p>Example: 10.0.0.0</p>
+        <p>Example</p>
+        <p>IPv4 Address: 10.0.0.0</p>
+        <p>Subnet: please select and option in the drop down box</p>
+        <p>Rate: 10</p>
     </div>
+</body>
+</html>

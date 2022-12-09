@@ -37,7 +37,19 @@ div.about {
     font-family: 'Roboto', sans-serif;
     margin: 10%;
 }
+div.error {
+    display: block;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+p.help {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
 
 a:link { text-decoration: none; }
-a:visited { text-decoration: none; color: black}
-a:hover { color: grey }
+a:visited { text-decoration: none; color: black;}
+a:hover { color: grey; }
