@@ -27,15 +27,21 @@ def index(request):
         ipv4 = f"{ipaddr}/{subnet}"
 
         rate = form.data["rate"]
-        if not isinstance(rate, int):
+        portrange = form.data["lowerboundport"]
+
+        try:
+            int(rate)
+            int(portrange)
+        except ValueError:
             return render(request, "frontend/help/help.html")
 
-        lowerboundport = form.data["lowerboundport"]
         upperboundport = form.data.get("upperboundport")
-        portrange = lowerboundport
-
         if upperboundport:
-            portrange = f"{lowerboundport}-{upperboundport}"
+            try:
+                int(upperboundport)
+            except ValueError:
+                return render(request, "frontend/help/help.html")
+            portrange = f"{portrange}-{upperboundport}"
 
         subprocess.run(['masscan', ipv4, '--ports', portrange, "--rate", rate, "-oJ", "results.json"], stdout=subprocess.PIPE)
 
