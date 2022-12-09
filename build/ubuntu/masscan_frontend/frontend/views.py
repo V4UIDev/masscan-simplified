@@ -9,10 +9,15 @@ from .forms import RequestForm
 # Create your views here.
 def index(request):
 
+    template = loader.get_template('frontend/index.html')
+
     if request.method == "POST":
         form = RequestForm(request.POST)
 
         subnet = form.data["subnet"]
+        if subnet == "-1":
+            return render(request, "frontend/help/help.html")
+       
         ipaddr = form.data["ipaddr"]
         try:
             validate_ipv4_address(ipaddr)
@@ -20,14 +25,17 @@ def index(request):
             return render(request, "frontend/help/help.html")
 
         ipv4 = f"{ipaddr}/{subnet}"
+
         rate = form.data["rate"]
+        if not isinstance(rate, int):
+            return render(request, "frontend/help/help.html")
+
         lowerboundport = form.data["lowerboundport"]
         upperboundport = form.data.get("upperboundport")
         portrange = lowerboundport
 
         if upperboundport:
             portrange = f"{lowerboundport}-{upperboundport}"
-
 
         subprocess.run(['masscan', ipv4, '--ports', portrange, "--rate", rate, "-oJ", "results.json"], stdout=subprocess.PIPE)
 
