@@ -23,9 +23,16 @@ def index(request):
             portrange = f"{lowerboundport}-{upperboundport}"
 
 
-        result = subprocess.run(['masscan', ipv4, '--ports', portrange, "--rate", rate, "-oJ", "results.json"], stdout=subprocess.PIPE)
+        subprocess.run(['masscan', ipv4, '--ports', portrange, "--rate", rate, "-oJ", "results.json"], stdout=subprocess.PIPE)
 
-        print(result.stdout) 
+        subprocess.run(['mongoimport', '-u', 'admin', '-p', 'password', '--db', 'masscanresults', '--collection', 'masscan_results', '--file', 'results.json', '--jsonArray'])
+
+        subprocess.run(['rm', 'results.json'])
 
     form = RequestForm()
     return render(request, "frontend/index.html", {"form": form})
+
+def about(request):
+    template = loader.get_template('frontend/about/about.html')
+
+    return render(request, "frontend/about/about.html")
