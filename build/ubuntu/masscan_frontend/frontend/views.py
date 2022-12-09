@@ -28,14 +28,8 @@ def index(request):
         ipv4 = f"{ipaddr}/{subnet}"
 
         rate = form.data["rate"]
-        
         portrange = form.data["lowerboundport"]
-        upperboundport = form.data.get("upperboundport")
         
-        mongodbusername = os.environ.get('MS_MONGODB_USERNAME')
-        mongodbpassword = os.environ.get('MS_MONGODB_PASSWORD')
-
-
         try:
             int(rate)
             int(portrange)
@@ -49,6 +43,9 @@ def index(request):
             except ValueError:
                 return render(request, "frontend/help/help.html")
             portrange = f"{portrange}-{upperboundport}"
+        
+        mongodbusername = os.environ.get('MS_MONGODB_USERNAME')
+        mongodbpassword = os.environ.get('MS_MONGODB_PASSWORD')
 
         subprocess.run(['masscan', ipv4, '--ports', portrange, "--rate", rate, "-oJ", "results.json"], stdout=subprocess.PIPE)
 
