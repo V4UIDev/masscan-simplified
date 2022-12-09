@@ -1,0 +1,19 @@
+<html>
+    <head>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'frontend/style.css' %}">
+    </head>
+    <body>
+    <div class="title">
+    <ul>
+        <li><a href="/frontend/">Home</a></li>
+        <li><a href="/" onclick="javascript:event.target.port=8081">Mongo Express</a></li>
+    </ul>
+    </div>
+    <div class="about" style="font-size:24px">
+        <p>Masscan is a Mass IP port scanning tool created by Robert David Graham. It is a command line tool used to send asynchronous packets to IP addresses. More information about the tool can be found <a href="https://github.com/robertdavidgraham/masscan">here.</a></p>
+        <br><br>
+        <p>Masscan Simplified is a tool designed for ease of use of the masscan tool. Its features include being able to specify the IP range and rate you want to send packets at, alongside being able to choose what ports to target. It is currently at a stage it can be ran in a development environment but will need work to make it work within a production setting due to known security issues.</p>
+        <br><br>
+        <p>The tool should also be used carefully. Port scanning can be seen as threatening to infrastructure and could lead to issues such as abuse reports and getting your IP blocked. For a list of IP ranges you should avoid scanning, please see the Masscan repo linked above.</p>
+    </div>
